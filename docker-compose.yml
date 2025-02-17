@@ -1,0 +1,23 @@
+networks:
+  anime-network:
+    name: anime-network
+    external: true
+
+services:
+  php:
+    container_name: anime-php
+    env_file:
+      - .env
+    networks:
+      - anime-network
+    restart: unless-stopped
+
+  caddy:
+    container_name: anime-caddy
+    depends_on:
+      - php
+    ports:
+      - "8950:80"
+    networks:
+      - anime-network
+    restart: unless-stopped
