@@ -16,6 +16,7 @@ ENV SYMFONY_VERSION ${SYMFONY_VERSION}
 ENV APP_ENV=prod
 
 WORKDIR /srv/app
+RUN chmod -R 777 /srv/app
 
 # php extensions installer: https://github.com/mlocati/docker-php-extension-installer
 COPY --from=php_extension_installer --link /usr/bin/install-php-extensions /usr/local/bin/

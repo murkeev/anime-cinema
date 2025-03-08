@@ -1,0 +1,17 @@
+framework:
+  messenger:
+    default_bus: default
+    buses:
+      default: ~
+
+    transports:
+      async:
+        dsn: 'doctrine://default'
+        options:
+          auto_setup: true
+          redeliver_timeout: 3600
+        retry_strategy:
+          max_retries: 0
+
+    routing:
+      'App\Message\GetTopAnimeMessage': async

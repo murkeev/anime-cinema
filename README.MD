@@ -1,6 +1,6 @@
 ### service containers:
 ```bash
-docker compose -f docker-compose.services.yml -p symfony-services up -d
+docker compose -f docker-compose.services.yml -p anime-services up -d
 ```
 
 ### php and caddy containers:
