@@ -9,27 +9,27 @@ use App\Repository\TopAnimeRepository;
 use App\Service\JikanApiClient;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 final readonly class TopManager
 {
-
     public function __construct(
         private TopEntityBuilder $builder,
         private JikanApiClient $client,
         private EntityManagerInterface $em,
         private LoggerInterface $logger,
-        private TopAnimeRepository $repository
+        private TopAnimeRepository $repository,
     ) {
     }
 
-
-    public function save(): void
+    public function save(SymfonyStyle $io): void
     {
         $hasNextPage = true;
         $page = 1;
 
         while ($hasNextPage) {
             try {
+                $io->info(sprintf("Saving top data for page: %s", $page));
                 $content = $this->client->getTop($page);
                 $data = $content['data'];
                 $hasNextPage = $content['pagination']['has_next_page'];

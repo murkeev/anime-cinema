@@ -2,7 +2,7 @@
 
 namespace App\Message;
 
-class GetTopAnimeMessage
+readonly class GetTopAnimeMessage
 {
     public function __construct()
     {
