@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\TopAnimeRepository;
+use App\Repository\TopSeasonRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TopAnimeRepository::class)]
-class TopAnime
+#[ORM\Entity(repositoryClass: TopSeasonRepository::class)]
+class TopSeason
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -35,24 +35,36 @@ class TopAnime
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $favorites;
 
-    public function getExternalId(): string
+    public function getAnimeRank(): ?int
+    {
+        return $this->animeRank;
+    }
+
+    public function setAnimeRank(?int $animeRank): TopSeason
+    {
+        $this->animeRank = $animeRank;
+
+        return $this;
+    }
+
+    public function getExternalId(): ?string
     {
         return $this->externalId;
     }
 
-    public function setExternalId(string $externalId): TopAnime
+    public function setExternalId(?string $externalId): TopSeason
     {
         $this->externalId = $externalId;
 
         return $this;
     }
 
-    public function getFavorites(): int
+    public function getFavorites(): ?int
     {
         return $this->favorites;
     }
 
-    public function setFavorites(int $favorites): TopAnime
+    public function setFavorites(?int $favorites): TopSeason
     {
         $this->favorites = $favorites;
 
@@ -64,67 +76,55 @@ class TopAnime
         return $this->id;
     }
 
-    public function setId(int $id): TopAnime
+    public function setId(int $id): TopSeason
     {
         $this->id = $id;
 
         return $this;
     }
 
-    public function getMembers(): int
+    public function getMembers(): ?int
     {
         return $this->members;
     }
 
-    public function setMembers(int $members): TopAnime
+    public function setMembers(?int $members): TopSeason
     {
         $this->members = $members;
 
         return $this;
     }
 
-    public function getPopularity(): int
+    public function getPopularity(): ?int
     {
         return $this->popularity;
     }
 
-    public function setPopularity(int $popularity): TopAnime
+    public function setPopularity(?int $popularity): TopSeason
     {
         $this->popularity = $popularity;
 
         return $this;
     }
 
-    public function getAnimeRank(): ?int
-    {
-        return $this->animeRank;
-    }
-
-    public function setAnimeRank(?int $animeRank): TopAnime
-    {
-        $this->animeRank = $animeRank;
-
-        return $this;
-    }
-
-    public function getScore(): float
+    public function getScore(): ?float
     {
         return $this->score;
     }
 
-    public function setScore(float $score): TopAnime
+    public function setScore(?float $score): TopSeason
     {
         $this->score = $score;
 
         return $this;
     }
 
-    public function getScoredBy(): int
+    public function getScoredBy(): ?int
     {
         return $this->scoredBy;
     }
 
-    public function setScoredBy(int $scoredBy): TopAnime
+    public function setScoredBy(?int $scoredBy): TopSeason
     {
         $this->scoredBy = $scoredBy;
 

@@ -2,19 +2,23 @@
 
 namespace App\Builder;
 
-use App\Entity\TopAnime;
+use App\Entity\TopSeason;
 
 final readonly class TopEntityBuilder
 {
-    public function build(array $item): TopAnime
+    public function build(?array $item = null): TopSeason
     {
-        return (new TopAnime())
-            ->setExternalId((string)$item['mal_id'])
-            ->setScore($item['score'])
-            ->setScoredBy($item['scored_by'])
-            ->setAnimeRank($item['rank'])
-            ->setPopularity($item['popularity'])
-            ->setMembers($item['members'])
-            ->setFavorites($item['favorites']);
+        if ($item === null) {
+            return new TopSeason();
+        }
+
+        return (new TopSeason())
+            ->setExternalId((string)($item['mal_id'] ?? null))
+            ->setScore($item['score'] ?? null)
+            ->setScoredBy($item['scored_by'] ?? null)
+            ->setAnimeRank($item['rank'] ?? null)
+            ->setPopularity($item['popularity'] ?? null)
+            ->setMembers($item['members'] ?? null)
+            ->setFavorites($item['favorites'] ?? null);
     }
 }

@@ -3,9 +3,9 @@
 namespace App\Manager;
 
 use App\Builder\TopEntityBuilder;
-use App\Entity\TopAnime;
+use App\Entity\TopSeason;
 use App\Exception\JikanApiClientException;
-use App\Repository\TopAnimeRepository;
+use App\Repository\TopSeasonRepository;
 use App\Service\JikanApiClient;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -18,7 +18,7 @@ final readonly class TopManager
         private JikanApiClient $client,
         private EntityManagerInterface $em,
         private LoggerInterface $logger,
-        private TopAnimeRepository $repository,
+        private TopSeasonRepository $repository,
     ) {
     }
 
@@ -27,7 +27,7 @@ final readonly class TopManager
         $hasNextPage = true;
         $page = 1;
 
-        while ($hasNextPage) {
+        while ($hasNextPage && $page <= 200) {
             try {
                 $io->info(sprintf("Saving top data for page: %s", $page));
                 $content = $this->client->getTop($page);
@@ -48,7 +48,7 @@ final readonly class TopManager
         foreach ($data as $item) {
             $top = $this->builder->build($item);
             $existing = $this->repository->findOneBy(['externalId' => $top->getExternalId()]);
-            if ($existing instanceof TopAnime) {
+            if ($existing instanceof TopSeason) {
                 continue;
             }
             $this->em->persist($top);

@@ -2,15 +2,15 @@
 
 namespace App\Repository;
 
-use App\Entity\TopAnime;
+use App\Entity\TopSeason;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class TopAnimeRepository extends ServiceEntityRepository
+class TopSeasonRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TopAnime::class);
+        parent::__construct($registry, TopSeason::class);
     }
 
     public function findAll(): array
