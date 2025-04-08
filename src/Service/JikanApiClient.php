@@ -10,6 +10,7 @@ use JsonException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -23,6 +24,7 @@ final readonly class JikanApiClient
         private LoggerInterface $logger,
         #[Autowire('%api_url%')] private string $apiUrl,
         private EntityManagerInterface $em,
+        private SerializerInterface $serializer,
     ) {
     }
 
@@ -67,12 +69,11 @@ final readonly class JikanApiClient
     }
 
     /**
-     * @return array{
-     *     data: array
-     * }
+     * @param string $externalId
+     * @return array
      * @throws JikanApiClientException If API request fails or not return 200 status code.
      */
-    public function getSeasonDetails(int $externalId): array
+    public function getSeasonData(string $externalId): array
     {
         try {
             $response = $this->httpClient->request(
@@ -86,27 +87,20 @@ final readonly class JikanApiClient
                 ]
             );
 
-
-            $content = $response->getContent();
-
-            $decodedContent = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
-            $season = (new Season())
-                ->setExternalId((string)$externalId)
-                ->setTitle($decodedContent['data']['title']); //TODO: other fields
-
-            $topSeason = $this->em->getRepository(TopSeason::class)->findOneBy(['externalId' => $externalId]);
-//            $season->setTopSeason($topSeason)
-
             if ($response->getStatusCode() !== Response::HTTP_OK) {
                 throw new JikanApiClientException('Failed to get Jikan API response');
             }
 
-            return [];
-        } catch (ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface|TransportExceptionInterface|JsonException|JikanApiClientException $e) {
+            $content = $response->getContent();
+
+            return json_decode($content, true, 512, JSON_THROW_ON_ERROR);
+        } catch (ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface|TransportExceptionInterface|JikanApiClientException|JsonException $e) {
             $this
                 ->logger
                 ->error(sprintf("JikanApiClient returned an error response: %s ", $e->getMessage()));
             throw new JikanApiClientException($e->getMessage());
         }
     }
+
+
 }

@@ -17,4 +17,14 @@ class TopSeasonRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')->getQuery()->getResult();
     }
+
+    public function findAllExternalIds(): array
+    {
+        return array_column(
+            $this->createQueryBuilder('s')
+                ->select('s.externalId')
+                ->getQuery()
+                ->getResult()
+        , 'externalId');
+    }
 }

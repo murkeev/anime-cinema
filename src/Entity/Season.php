@@ -20,24 +20,56 @@ class Season
     #[ORM\Column(type: Types::STRING, nullable: false)]
     private string $title;
 
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private string $titleEnglish;
+
+    #[ORM\Column(type: Types::TEXT, nullable: false)]
+    private string $descriptionEnglish;
 
     #[ORM\Column(type: Types::INTEGER, nullable: false)]
     private int $yearOfPublication;
 
     #[ORM\ManyToOne(targetEntity: Anime::class, inversedBy: 'seasons')]
-    #[ORM\JoinColumn(nullable: false)]
-    private Anime $anime;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Anime $anime = null;
 
     #[ORM\OneToOne(targetEntity: TopSeason::class)]
     private TopSeason $topSeason;
 
-    public function getAnime(): Anime
+    public function __construct()
+    {
+    }
+
+    public function getTitleEnglish(): string
+    {
+        return $this->titleEnglish;
+    }
+
+    public function setTitleEnglish(string $titleEnglish): Season
+    {
+        $this->titleEnglish = $titleEnglish;
+
+        return $this;
+    }
+
+    public function getDescriptionEnglish(): string
+    {
+        return $this->descriptionEnglish;
+    }
+
+    public function setDescriptionEnglish(string $descriptionEnglish): Season
+    {
+        $this->descriptionEnglish = $descriptionEnglish;
+
+        return $this;
+    }
+
+    public function getAnime(): ?Anime
     {
         return $this->anime;
     }
 
-    public function setAnime(Anime $anime): Season
+    public function setAnime(?Anime $anime): Season
     {
         $this->anime = $anime;
 

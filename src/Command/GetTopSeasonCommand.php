@@ -13,7 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'app:get-top-anime',
     description: 'Get top anime'
 )]
-final class GetTopAnimeCommand extends Command
+final class GetTopSeasonCommand extends Command
 {
     public function __construct(private readonly TopManager $topManager)
     {

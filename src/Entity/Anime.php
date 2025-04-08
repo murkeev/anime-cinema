@@ -16,15 +16,6 @@ class Anime
     #[ORM\Column(type: Types::INTEGER)]
     private int $id;
 
-    #[ORM\Column(type: Types::STRING)]
-    private string $title;
-
-    #[ORM\Column(type: Types::STRING, nullable: false)]
-    private ?string $originalTitle;
-
-    #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $description;
-
     #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
     private ?bool $ongoing;
 
@@ -36,18 +27,6 @@ class Anime
         $this->seasons = new ArrayCollection();
     }
 
-//    TODO: to service layer
-//    public function getYearsOfPublication(): array
-//    {
-//        $years = [];
-//        foreach ($this->seasons as $season) {
-//            if ($season->getYearOfPublication() !== null) {
-//                $years[] = $season->getYearOfPublication();
-//            }
-//        }
-//        return array_unique($years);
-//    }
-
     public function getId(): int
     {
         return $this->id;
@@ -56,30 +35,6 @@ class Anime
     public function setId(int $id): Anime
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): Anime
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -96,17 +51,19 @@ class Anime
         return $this;
     }
 
-    public function getOriginalTitle(): ?string
-    {
-        return $this->originalTitle;
-    }
+//    TODO: to service layer
+//    public function getYearsOfPublication(): array
+//    {
+//        $years = [];
+//        foreach ($this->seasons as $season) {
+//            if ($season->getYearOfPublication() !== null) {
+//                $years[] = $season->getYearOfPublication();
+//            }
+//        }
+//        return array_unique($years);
+//    }
 
-    public function setOriginalTitle(?string $originalTitle): Anime
-    {
-        $this->originalTitle = $originalTitle;
 
-        return $this;
-    }
 
     public function getSeasons(): Collection
     {

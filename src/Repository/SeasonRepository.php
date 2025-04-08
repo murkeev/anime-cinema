@@ -17,7 +17,7 @@ class SeasonRepository extends ServiceEntityRepository
         parent::__construct($registry, Season::class);
     }
 
-    // season -> getAnime
+
 
     public function getAnimeBySeasonId(int $seasonId): ?Anime
     {
@@ -29,4 +29,6 @@ class SeasonRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+
 }
