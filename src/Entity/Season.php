@@ -21,7 +21,7 @@ class Season
     private string $title;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private string $titleEnglish;
+    private ?string $titleEnglish = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: false)]
     private string $descriptionEnglish;
@@ -40,12 +40,12 @@ class Season
     {
     }
 
-    public function getTitleEnglish(): string
+    public function getTitleEnglish(): ?string
     {
         return $this->titleEnglish;
     }
 
-    public function setTitleEnglish(string $titleEnglish): Season
+    public function setTitleEnglish(?string $titleEnglish): Season
     {
         $this->titleEnglish = $titleEnglish;
 

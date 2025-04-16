@@ -2,8 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\Season;
-use App\Entity\TopSeason;
 use App\Exception\JikanApiClientException;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
